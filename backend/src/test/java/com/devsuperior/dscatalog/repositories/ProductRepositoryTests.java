@@ -1,8 +1,10 @@
 package com.devsuperior.dscatalog.repositories;
 
 import com.devsuperior.dscatalog.entities.Product;
+import com.devsuperior.dscatalog.factories.ProductFactory;
 import com.devsuperior.dscatalog.services.exceptions.ResourceNotFoundException;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -16,6 +18,23 @@ public class ProductRepositoryTests {
     @Autowired
     private ProductRepository repository;
 
+    private long countTotalProducts;
+
+    @BeforeEach
+    void setUp() throws Exception {
+        countTotalProducts = 25L;
+    }
+
+    @Test
+    public void saveShouldPersistWithAutoincrementeWhenIdIsValid() {
+        Product product = ProductFactory.createProduct();
+
+        product = repository.save(product);
+
+        Assertions.assertNotNull(product.getId());
+        Assertions.assertEquals(countTotalProducts + 1, product.getId());
+    }
+
     @Test
     public void deleteShouldDeleteObjectWhenIdIsValid() {
 
@@ -26,5 +45,5 @@ public class ProductRepositoryTests {
 
         Assertions.assertFalse(result.isPresent());
     }
-    
+
 }
