@@ -48,13 +48,17 @@ public class ProductRepositoryTests {
     }
 
     @Test
-    public void saveShouldPersistWithAutoincrementeWhenIdIsValid() {
+    public void saveShouldPersistWithAutoincrementeWhenIdIsNull() {
         Product product = ProductFactory.createProduct();
+        product.setId(null);
 
         product = repository.save(product);
+        Optional<Product> result = repository.findById(product.getId());
 
         Assertions.assertNotNull(product.getId());
         Assertions.assertEquals(countTotalProducts + 1, product.getId());
+        Assertions.assertTrue(result.isPresent());
+        Assertions.assertSame(result.get(), product);
     }
 
     @Test
