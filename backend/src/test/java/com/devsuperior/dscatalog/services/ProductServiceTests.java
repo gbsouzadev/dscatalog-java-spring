@@ -3,7 +3,7 @@ package com.devsuperior.dscatalog.services;
 import com.devsuperior.dscatalog.dto.ProductDTO;
 import com.devsuperior.dscatalog.entities.Category;
 import com.devsuperior.dscatalog.entities.Product;
-import com.devsuperior.dscatalog.factories.ProductFactory;
+import com.devsuperior.dscatalog.factories.Factory;
 import com.devsuperior.dscatalog.repositories.CategoryRepository;
 import com.devsuperior.dscatalog.repositories.ProductRepository;
 import com.devsuperior.dscatalog.services.exceptions.DatabaseException;
@@ -42,7 +42,7 @@ public class ProductServiceTests {
     private long nonExistingId;
     private long dependentId;
     private Product product;
-    private Category cat;
+    private Category category;
     private ProductDTO dto;
     private PageImpl<Product> page;
 
@@ -52,15 +52,15 @@ public class ProductServiceTests {
         existingId = 1L;
         nonExistingId = 2L;
         dependentId = 3L;
-        product = ProductFactory.createProduct();
-        cat = ProductFactory.createCategory();
-        dto = ProductFactory.createProductDTO();
+        product = Factory.createProduct();
+        category = Factory.createCategory();
+        dto = Factory.createProductDTO();
         page = new PageImpl<>(List.of(product));
 
         //Update
         Mockito.when(repository.getReferenceById(existingId)).thenReturn(product);
         Mockito.when(repository.getReferenceById(nonExistingId)).thenThrow(EntityNotFoundException.class);
-        Mockito.when(categoryRepository.getReferenceById(cat.getId())).thenReturn(cat);
+        Mockito.when(categoryRepository.getReferenceById(category.getId())).thenReturn(category);
 
         //Insert and Update
         Mockito.when(repository.save(ArgumentMatchers.any())).thenReturn(product);
