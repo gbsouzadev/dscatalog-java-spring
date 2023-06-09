@@ -43,7 +43,7 @@ public class ProductServiceTests {
     private long dependentId;
     private Product product;
     private Category category;
-    private ProductDTO dto;
+    private ProductDTO productDTO;
     private PageImpl<Product> page;
 
 
@@ -54,7 +54,7 @@ public class ProductServiceTests {
         dependentId = 3L;
         product = Factory.createProduct();
         category = Factory.createCategory();
-        dto = Factory.createProductDTO();
+        productDTO = Factory.createProductDTO();
         page = new PageImpl<>(List.of(product));
 
         //Update
@@ -82,9 +82,9 @@ public class ProductServiceTests {
     @Test
     public void insertShouldInsertProductDto() {
 
-        ProductDTO result = service.insert(dto);
+        ProductDTO result = service.insert(productDTO);
 
-        Assertions.assertEquals(dto.getName(), result.getName());
+        Assertions.assertEquals(productDTO.getName(), result.getName());
         Mockito.verify(repository, times(1)).save((Product)ArgumentMatchers.any());
     }
 
@@ -92,7 +92,7 @@ public class ProductServiceTests {
     public void updateShouldThrowResourceNotFoundExceptionWhenIdDoesNotExist() {
 
         Assertions.assertThrows(ResourceNotFoundException.class, () -> {
-            ProductDTO result = service.update(nonExistingId, dto);
+            ProductDTO result = service.update(nonExistingId, productDTO);
         });
         Mockito.verify(repository, times(1)).getReferenceById(nonExistingId);
     }
@@ -100,7 +100,7 @@ public class ProductServiceTests {
     @Test
     public void updateShouldReturnProductDtoWhenIdExists() {
 
-        ProductDTO result = service.update(existingId, dto);
+        ProductDTO result = service.update(existingId, productDTO);
 
         Assertions.assertEquals(existingId, result.getId());
         Mockito.verify(repository, times(1)).getReferenceById(existingId);
