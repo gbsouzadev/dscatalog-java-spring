@@ -62,7 +62,7 @@ public class ProductServiceTests {
         Mockito.when(repository.getReferenceById(nonExistingId)).thenThrow(EntityNotFoundException.class);
         Mockito.when(categoryRepository.getReferenceById(cat.getId())).thenReturn(cat);
 
-        //Save and Update
+        //Insert and Update
         Mockito.when(repository.save(ArgumentMatchers.any())).thenReturn(product);
 
         //FindAllPagable
@@ -77,6 +77,15 @@ public class ProductServiceTests {
         Mockito.when(repository.existsById(dependentId)).thenReturn(true);
         Mockito.doNothing().when(repository).deleteById(existingId);
         Mockito.doThrow(DatabaseException.class).when(repository).deleteById(dependentId);
+    }
+
+    @Test
+    public void insertShouldInsertProductDto() {
+
+        ProductDTO result = service.insert(dto);
+
+        Assertions.assertEquals(dto.getName(), result.getName());
+        Mockito.verify(repository, times(1)).save((Product)ArgumentMatchers.any());
     }
 
     @Test
