@@ -53,7 +53,7 @@ public class ProductServiceTests {
         nonExistingId = 2L;
         dependentId = 3L;
         product = ProductFactory.createProduct();
-        cat = new Category(4L, "New Category");
+        cat = ProductFactory.createCategory();
         dto = ProductFactory.createProductDTO();
         page = new PageImpl<>(List.of(product));
 
@@ -111,7 +111,7 @@ public class ProductServiceTests {
     public void findByIdShouldThrowResourceNotFoundExceptionWhenIdDoesNotExist() {
 
         Assertions.assertThrows(ResourceNotFoundException.class, () -> {
-            ProductDTO result = service.findById(nonExistingId);
+            service.findById(nonExistingId);
         });
         Mockito.verify(repository, times(1)).findById(nonExistingId);
     }
