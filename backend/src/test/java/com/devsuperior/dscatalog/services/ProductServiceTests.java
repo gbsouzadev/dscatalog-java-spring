@@ -117,7 +117,7 @@ public class ProductServiceTests {
     }
 
     @Test
-    public void findByIdShoulReturnProductDtoWhenIdExists() {
+    public void findByIdShouldReturnProductDtoWhenIdExists() {
 
         ProductDTO result = service.findById(existingId);
 
@@ -137,7 +137,7 @@ public class ProductServiceTests {
     }
 
     @Test
-    public void deleteShouldTrhowDatabaseExceptionWhenDependentId() {
+    public void deleteShouldThrowDatabaseExceptionWhenDependentId() {
         Assertions.assertThrows(DatabaseException.class, () -> {
             service.delete(dependentId);
         });
