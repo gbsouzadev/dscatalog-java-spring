@@ -89,7 +89,7 @@ public class ProductControllerTests {
     }
 
     @Test
-    public void insertShouldReturnProductDto() throws Exception {
+    public void insertShouldReturnProductDtoAndCreatedStatus() throws Exception {
 
         String jsonBody = objectMapper.writeValueAsString(productDTO);
 
