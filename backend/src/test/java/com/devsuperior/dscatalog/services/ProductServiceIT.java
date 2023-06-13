@@ -39,6 +39,13 @@ public class ProductServiceIT {
     }
 
     @Test
+    public void deleteShouldDeleteResourceWhenIdExists() {
+        service.delete(existingId);
+
+        Assertions.assertEquals(countTotalProducts - 1, repository.count());
+    }
+
+    @Test
     public void deleteShouldThrowResourceNotFoundExceptionWhenIdDoesNotExist() {
         Assertions.assertThrows(ResourceNotFoundException.class, () -> {
             service.delete(nonExistingId);
