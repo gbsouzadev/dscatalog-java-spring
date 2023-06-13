@@ -62,13 +62,13 @@ public class ProductServiceIT {
     }
 
     @Test
-    public void findAllPagedShouldReturnPageAndSize() {
-        PageRequest pageRequest = PageRequest.of(2, 10);
+    public void findAllPagedShouldReturnPageWhenPage0Size10() {
+        PageRequest pageRequest = PageRequest.of(0, 10);
 
         Page<ProductDTO> result = service.findAllPaged(pageRequest);
 
         Assertions.assertFalse(result.isEmpty());
-        Assertions.assertEquals(2, result.getNumber());
+        Assertions.assertEquals(0, result.getNumber());
         Assertions.assertEquals(10, result.getSize());
         Assertions.assertEquals(countTotalProducts, result.getTotalElements());
         Assertions.assertEquals(3, result.getTotalPages());
